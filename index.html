@@ -2,20 +2,118 @@
 <html>
 <head>
 	<title>Electric Dreams</title>
-
-	<style type="text/css">
-	/*style the computer text, input, and button*/
-	</style>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="harabarahand/stylesheet.css">
 </head>
 <body>
 <h1>Electric Dreams</h1>
-<p id = "computer">Hi, how are you today?</p>
-<input id = "human" type = "text" placeholder = "Type your response...">
+<p id = "computer">Hello there, how are you?</p>
+<input id = "human" type = "text" placeholder = "Type your response">
 <button>Enter</button>
 
 <script type="text/javascript">
 //your script here
+//There are three common methods to gain access (control) of markup elements
+//We have used querySelector
 
+var computer = document.querySelector('#computer');
+var human = document.getElementById('human');
+var button = document.getElementsByTagName('button')[0];
+
+//other vars we will use in the next step
+var responseNumber;
+    //used to store the value of the response to display to the player
+var newResponse;
+    //used to generate the next response and prevent duplication of responses
+var humanMsg = "";
+    //will hold the text (value) of the player input
+var computerMsg = document.querySelector("#computer");
+    //will hold the computer text displayed to the player each turn
+
+var genericResponses = [
+	"Is that so...",
+	"Oh, I see.",
+	"Thank You for sharing."];
+    //will be populated with messages to respond to the player
+
+
+//make the human input the focus when the page loads
+human.focus();
+
+button.addEventListener("click",clickHandler,false);
+
+function clickHandler(){
+	playGame();
+}
+
+window.addEventListener("keydown",keydownHandler,false);
+function keydownHandler(event){
+	if (event.keyCode===13) {
+		playGame();
+	}
+}
+
+var goodResponse = ["good", "well", "happy", "glad","cheer","excellent",
+                   "positive", "pleased", "pleasant", "excited", "eager",
+                   "jolly", "joy", "hope", "enthusiatic", "satisfied", 
+                   "satisfy", "content", "inspired", "inspirational",
+                   "fine", "wonderful"];
+
+    
+var badResponse = ["not well", "bad", "sad", "disappointed", "down", 
+                   "upset", "embarrassed", "rejected", "discouraged",
+                   "ugh", "yuck", "yucky", "eww", "ew"]; 
+
+var okResponse = ["so so", "okay", "eh", "i guess", "could be better",
+                  "could be worst", "hm", "hmm", "um", "umm"];
+    
+    
+function playGame( ) {
+	//let the games begin
+	//order of business:
+
+	// //version4
+	 humanMsg = (human.value).toLowerCase();
+    
+    if (goodResponse.indexOf(humanMsg) !== -1 ){
+	computerMsg = "That's great that you are in good spirits!" 
+                        + " Did something good happen?";
+        if (humanMsg.indexOf("yes") !== -1){
+            computerMsg = "So what happened?";
+             if (humanMsg.indexOf("") !== -1){
+                 computerMsg = "Oh wow!. I hope the rest of your day is great.";}
+        }
+        else if (humanMsg.indexOf("maybe") !== -1){
+            computerMsg = "So what happened?";
+    
+            if (humanMsg.indexOf("") !== -1){
+            computerMsg = "Oh I see. I hope the rest of your day is great.";}}
+    }else if (humanMsg.indexOf("no") !== -1){
+            computerMsg = "That's okay, you don't have to tell me. Hope you a great rest of the day.";
+        
+//	 }else if (humanMsg.indexOf("bad") !== -1){
+        }else if (badResponse.indexOf(humanMsg) !== -1){
+	 	computerMsg = "I am sorry to hear you aren't having a good day. What happened?"
+        
+     }else if (okResponse.indexOf(humanMsg) !== -1){
+//        }else if (humanMsg.indexOf("eh") !== -1){ 
+	 	computerMsg = "What could of made your day better?";
+     }else if (humanMsg.indexOf("nothing") !== -1){
+            computerMsg = "Well, I wish the rest of your day gets better.";
+	 }else {
+	 	computerMsg = "Oh I see. I hope the rest of your day is great.";
+	 }
+	 computer.innerHTML = computerMsg;
+
+	//3. wipe the text in the player input field 
+	human.value = "";
+
+}
+function endGame(){
+	////.assign() leaves the back button working
+	////.replace() disables the back button by replacing the location in the    history
+	location.assign("http://en.wikipedia.org/wiki/Electric_Dreams_(film)");
+}
 </script>
 </body>
 </html>
